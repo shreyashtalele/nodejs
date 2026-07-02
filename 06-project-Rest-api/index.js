@@ -6,12 +6,30 @@ const fs = require('fs')
 const app = express()
 const PORT = 8000
 
+
+// Middlewares
 app.use(express.urlencoded({ extended: false }))
+
+app.use((req, res, next) => {
+    console.log("Middleware 1 ");
+    next()
+})
+
+app.use((req, res, next) => {
+    console.log("Middleware 2 ");
+    fs.appendFile('log.txt', ` ${req.ip} ${Date.now().toString()}  ${req.method} ${req.path} \n`, (err, data) => {
+        next()
+    })
+
+})
 
 
 
 // REST APIS 
 app.get('/api/users', (req, res) => {
+    res.setHeader('myname', 'shreyashtalele')
+    console.log(req.headers)
+
     return res.send(users)
 })
 app.get('/users', (req, res) => {
@@ -29,6 +47,7 @@ app.route("/api/users/:id")
     .get((req, res) => {
         const id = Number(req.params.id);
         const user = users.find((user) => user.id === id)
+        if (!user) return res.status(404).json({ message: "Not found" })
         return res.send(user)
     })
     .patch((req, res) => {
@@ -101,7 +120,7 @@ app.post('/api/users', (req, res) => {
             return res.status(500).json({ error: err.message });
         }
 
-        return res.json({
+        return res.status(201).json({
             status: 'success',
             id: users.length
         });
