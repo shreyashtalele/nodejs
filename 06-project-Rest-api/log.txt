@@ -11,3 +11,8 @@
  ::1 1782958153416  GET /api/users 
  ::1 1782958195425  GET /api/users 
  ::1 1782959462128  GET /api/users/9999 
+ ::1 1783043069932  POST /api/users 
+ ::1 1783043110922  POST /api/users 
+ ::1 1783043158234  POST /api/users 
+ ::1 1783043260554  POST /api/users 
+ ::1 1783043428972  POST /api/users 
