@@ -39,8 +39,11 @@ async function handleAnalytis(req, res) {
     })
 }
 
+
+
 module.exports = {
     handleGenerateShortURL
     , handleRedirectURL
     , handleAnalytis
+    , handlegetAllUrls
 }
