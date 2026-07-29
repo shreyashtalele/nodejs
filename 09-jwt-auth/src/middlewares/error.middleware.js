@@ -1,4 +1,5 @@
 function errorHandler(error, req, res, next) {
+    console.log(error)
     if (error.message.includes("required")) {
         return res.status(400).json({
             message: error.message
@@ -17,3 +18,5 @@ function errorHandler(error, req, res, next) {
         message: "Internal Server Error"
     });
 }
+
+module.exports = errorHandler

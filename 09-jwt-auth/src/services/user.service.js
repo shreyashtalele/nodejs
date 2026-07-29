@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs')
-const jwt = require("jsonwebtoken");
 const User = require('../models/user')
+const { generateToken } = require('../utils/jwt');
+
 
 
 const registerUser = async (userData) => {
@@ -14,7 +15,7 @@ const registerUser = async (userData) => {
         throw new Error("Email already exists")
     }
 
-    const hashedPassword = await bcrypt.hash(password, process.env.BCRYPT_SALT)
+    const hashedPassword = await bcrypt.hash(password, Number(process.env.BCRYPT_SALT))
 
 
     const user = await User.create({
@@ -46,14 +47,13 @@ const loginUser = async (userData) => {
         throw new Error("Invalid email or password")
     }
 
-    const token = jwt.sign(
-        {
-            id: user._id,
-            role: user.role,
-        },
-        process.env.JWT_SECRET,
-        {
-            expiresIn: process.env.JWT_EXPIRES_IN,
-        }
-    );
+    const token = generateToken(user)
+    return {
+        token, user
+    }
+}
+
+module.exports = {
+    registerUser,
+    loginUser
 }
