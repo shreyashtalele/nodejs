@@ -5,7 +5,7 @@ const { generateToken } = require('../utils/jwt');
 
 
 const registerUser = async (userData) => {
-    const { name, email, password } = userData
+    const { name, email, password, role } = userData
 
     const existingUser = await User.findOne({
         email: email
@@ -21,7 +21,8 @@ const registerUser = async (userData) => {
     const user = await User.create({
         name,
         email,
-        password: hashedPassword
+        password: hashedPassword,
+        role
     })
 
 

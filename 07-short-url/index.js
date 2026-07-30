@@ -11,9 +11,6 @@ connectToMongoDB('mongodb://127.0.0.1:27017/shorturl').then(() => console.log("M
     .catch((err) => console.log(err));
 
 
-
-
-
 app.listen(PORT, (error) => {
     if (error) {
         console.log("Server Failed to start :: ", error)
